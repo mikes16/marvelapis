@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Marvel Application</string>
+    <string name="character_activity">Heroes</string>
+    <string name="failure_network">Network Connection Error</string>
+    <string name="empty_response">Empty Response</string>
+    <string name="server_error">Server Error</string>
+    <string name="empty_description">No Description</string>
+
+    <string name="character_transition">characterTransition</string>
+</resources>
