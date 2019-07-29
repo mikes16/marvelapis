@@ -4,6 +4,7 @@ import android.arch.paging.PagedListAdapter
 import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bumptech.glide.RequestManager
 import com.interview.kotlin.iterview.R
 import com.interview.kotlin.iterview.core.navigation.Navigator
 import com.interview.kotlin.iterview.core.platform.GlideRequests
@@ -15,7 +16,7 @@ import com.interview.kotlin.iterview.feature.characters.ui.viewholders.Character
  * A simple adapter implementation that shows Marvel Heroes.
  */
 class CharactersAdapter (
-        private val glide: GlideRequests) :
+        private val glide: RequestManager) :
         PagedListAdapter<CharactersView.DataBean.ResultsBean, CharactersViewHolder>(POST_COMPARATOR){
 
     private var networkState: NetworkState? = null

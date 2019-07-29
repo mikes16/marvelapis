@@ -7,6 +7,7 @@ import android.support.annotation.StringRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.interview.kotlin.iterview.R
 import com.interview.kotlin.iterview.core.exception.Failure
 import com.interview.kotlin.iterview.core.extensions.failure
@@ -14,7 +15,6 @@ import com.interview.kotlin.iterview.core.extensions.observe
 import com.interview.kotlin.iterview.core.extensions.viewModel
 import com.interview.kotlin.iterview.core.navigation.Navigator
 import com.interview.kotlin.iterview.core.platform.BaseFragment
-import com.interview.kotlin.iterview.core.platform.GlideApp
 import com.interview.kotlin.iterview.core.platform.NetworkState
 import com.interview.kotlin.iterview.feature.characters.ui.adapters.CharactersAdapter
 import com.interview.kotlin.iterview.feature.characters.ui.exception.CharactersException
@@ -64,7 +64,7 @@ class CharactersFragment : BaseFragment(){
 
     private fun initAdapter() {
 
-        val glide = GlideApp.with(this)
+        val glide = Glide.with(this)
         val adapter = CharactersAdapter(glide)
         list.adapter = adapter
         charactersViewModel.posts.observe(this, Observer<PagedList<CharactersView.DataBean.ResultsBean>> {

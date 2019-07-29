@@ -84,7 +84,6 @@ class CharactersDataSource(
 
     override fun loadInitial(params: LoadInitialParams<Int>,
                              callback: LoadInitialCallback<Int, CharactersView.DataBean.ResultsBean>) {
-        Log.d("Porqueee??", "loadSize: ${params.requestedLoadSize}")
         val request = service.getCharactersList(
                 offset = offset,
                 limit = params.requestedLoadSize

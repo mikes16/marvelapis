@@ -2,6 +2,7 @@ package com.interview.kotlin.iterview.feature.characters.ui.viewholders
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.bumptech.glide.RequestManager
 import com.interview.kotlin.iterview.core.extensions.determineThumbnailUrl
 import com.interview.kotlin.iterview.core.platform.GlideRequests
 import com.interview.kotlin.iterview.feature.characters.ui.model.CharactersView
@@ -9,7 +10,7 @@ import kotlinx.android.synthetic.main.row_character.view.*
 
 class CharactersViewHolder(
         view: View,
-        private val glide: GlideRequests
+        private val glide: RequestManager
 ) : RecyclerView.ViewHolder(view) {
 
     fun bind(charactersView: CharactersView.DataBean.ResultsBean?,

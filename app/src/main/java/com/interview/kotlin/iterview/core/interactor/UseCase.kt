@@ -2,10 +2,8 @@ package com.interview.kotlin.iterview.core.interactor
 
 import com.interview.kotlin.iterview.core.exception.Failure
 import com.interview.kotlin.iterview.core.functional.Either
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Abstract class for a Use Case (Interactor in terms of Clean Architecture).
@@ -15,13 +13,34 @@ import kotlinx.coroutines.experimental.launch
  * By convention each [UseCase] implementation will execute its job in a background thread
  * (kotlin coroutine) and will post the result in the UI thread.
  */
+typealias CompletionBlock<T> = (Either<Failure, T>) -> Unit
+
 abstract class UseCase<out Type, in Params> where Type : Any {
+
+    private var parentJob: Job = Job()
+    private var backgroundContext: CoroutineContext = Dispatchers.IO
+    private var foregroundContext: CoroutineContext = Dispatchers.Main
 
     abstract suspend fun run(params: Params): Either<Failure, Type>
 
-    operator fun invoke(params: Params, onResult: (Either<Failure, Type>) -> Unit = {}) {
-        val job = async(CommonPool) { run(params) }
-        launch(UI) { onResult(job.await()) }
+
+    operator fun invoke(params: Params, onResult: CompletionBlock<Type>) {
+        unsubscribe()
+        parentJob = Job()
+        CoroutineScope(foregroundContext + parentJob).launch{
+            val result = withContext(backgroundContext) {
+                run(params)
+            }
+
+            onResult(result)
+        }
+    }
+
+    fun unsubscribe() {
+        parentJob.apply {
+            cancelChildren()
+            cancel()
+        }
     }
 
     class None
